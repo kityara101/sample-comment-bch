@@ -1,0 +1,20 @@
+plugins {
+    id 'com.github.blindpirate.gogradle' version '0.7.0'
+}
+
+golang {
+    packagePath = 'testpkg' // go import path of project to be built, NOT local file system path!
+    project.ext.package = packagePath
+}
+
+ext.prjDir = projectDir
+
+build {
+    outputLocation = projectDir.getPath() + '/build/bin/' + project.package
+    environment "GOPATH": projectDir.getPath()
+}
+
+task wrapper (type: Wrapper) {
+    gradleVersion = "4.3"
+}
+logger.quiet System.getenv('GOPATH')
